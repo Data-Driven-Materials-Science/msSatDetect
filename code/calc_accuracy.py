@@ -111,7 +111,7 @@ cfg.MODEL.WEIGHTS = str(model_checkpoints[-1])  # use the last model checkpoint 
 predictor = DefaultPredictor(cfg)  # create predictor object
 
 '''---------------------------'''
-img_path = Path('..','data','training','images','S05_03_SE1_1000X65.png')
+'''img_path = Path('..','data','training','images','S02_03_SE1_500X23.png')
 img = cv2.imread(str(img_path))
 outs = predictor(img)
 data_utils.format_outputs(img_path, dataset='test', pred=outs)
@@ -119,7 +119,19 @@ visualize.display_ddicts(ddict=outs,  # predictions to display
                                  outpath='../data/newData/visuals/', # Filepath to save figure
                                  dataset='Test',  
                                  gt=False,  # specifies format as model predictions
-                                img_path=img_path)  # path to image
+                                img_path=img_path)  # path to image'''
+
+newImages = ['MW_CuOFE_500_01.png', 'MW_CuOFE_500_03.png', 'MW_CuOFE_500_05.png', 'MW_CuOFE_500_07.png', 'MW_CuOFE_500_09.png']
+for i in newImages:
+    img_path = Path('..','data','newData','images',i)
+    img = cv2.imread(str(img_path))
+    outs = predictor(img)
+    data_utils.format_outputs(img_path, dataset='test', pred=outs)
+    visualize.display_ddicts(ddict=outs,  # predictions to display
+                                    outpath='../data/newData/visuals/', # Filepath to save figure
+                                    dataset='Test',  
+                                    gt=False,  # specifies format as model predictions
+                                    img_path=img_path)  # path to image
 
 
 '''---------------------------'''
@@ -145,7 +157,6 @@ with open(Path('data',f'{EXPERIMENT_NAME}-results.pickle'), 'wb') as f:
     pickle.dump(results, f)'''
 
 '''---------------------------'''
-
 loop_num = 1
 OFFSET = 0
 pickle_folder = []
