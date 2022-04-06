@@ -100,9 +100,9 @@ cfg.OUTPUT_DIR = str(Path(f'../models/{EXPERIMENT_NAME}_output_1'))
 os.makedirs(Path(cfg.OUTPUT_DIR), exist_ok=True)
 
 '''---------------------------'''
-trainer = DefaultTrainer(cfg)  # create trainer object from cfg
+'''trainer = DefaultTrainer(cfg)  # create trainer object from cfg
 trainer.resume_or_load(resume=False)  # start training from iteration 0
-trainer.train()  # train the model!
+trainer.train()  # train the model!'''
 
 '''---------------------------'''
 model_checkpoints = sorted(Path(cfg.OUTPUT_DIR).glob('*.pth'))  # paths to weights saved druing training
@@ -266,8 +266,18 @@ for cycle in range(len(model_checkpoints)):
             img = skimage.color.gray2rgb(skimage.io.imread(iset.filepath))
             #display_iset(img, iset=iset_det)
             counter += 1'''
-    del (average_p[0])[-1]
-    del (average_r[0])[-1]
+    '''----------------------'''
+    print('BEFORE DELETE')
+    print(average_p)
+    print(average_r)
+    '''----------------------'''
+    del (average_p[0])[2] #Removes 2nd as it is systemically different thanthe rest of satellite morphologies
+    del (average_r[0])[2] #Removes 2nd as it is systemically different thanthe rest of satellite morphologies
+    '''----------------------'''
+    print('AFTER DELETE')
+    print(average_p)
+    print(average_r)
+    '''----------------------'''
     
     iteration_name = ((str(model_checkpoints[-cycle]).split('/'))[-1]).split('_')[-1].split('.pth')[0]
     if iteration_name == 'final':
