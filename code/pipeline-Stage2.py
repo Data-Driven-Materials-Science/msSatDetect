@@ -23,11 +23,12 @@ from detectron2.structures import BoxMode
 ampis_root = Path('../../')
 sys.path.append(str(ampis_root))
 
-from ampis import data_utils, visualize, analyze, export_anno
+from ampis import data_utils, visualize, analyze
 from ampis.applications import powder
 from ampis.structures import InstanceSet
 from ampis.visualize import display_iset
 import seaborn as sns
+import export_anno
 print("imports loaded correctly")
 
 '''---------------------------'''
@@ -111,6 +112,9 @@ for i in rawNames:
     os.makedirs(Path(outputPathSegment, name), exist_ok=True)
     img_path = Path('..','data','newData','images',i)
     img = cv2.imread(str(img_path))
+    outs = predictor(img)
+    export1 = export_anno.make_VIA_file(i, img_path, outs) #Converts predictions to VIA format
+    export_anno.save_to_json(str(Path(outputPathSegment, name, name + '_anno.json')), export1) #Saves to JSON as specificed location
     outs = predictor(img)
     data_utils.format_outputs(img_path, dataset='test', pred=outs)
     visualize.display_ddicts(ddict=outs,  # predictions to display
