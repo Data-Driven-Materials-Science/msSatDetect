@@ -1,0 +1,8 @@
+Stage 3 is not coding related. 
+
+[-] Annotations should be collected from msSatDetect/data/newData/output/imageName/...
+[-] Once locally donwloaded, upload all annotations to VIA
+[-] Touch up annotations as needed
+[-] Save touch ups by Project -> Save -> (Save to file)
+[-] Upload back to super computer to msSatDetect/data/newData/
+[-] Run pipeline-Stage4.py
