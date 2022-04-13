@@ -48,7 +48,7 @@ for i in range(len(iset_satellites_gt)):
     print(name)
     print(iset_satellites_gt[i].rprops.shape)'''
 
-rowNames = ['avgArea', 'minArea', 'maxArea', 'stdDevArea','avgPerimeter', 'minPerimeter', 'maxPerimeter', 'stdDevPerimeter',
+rowNames = ['numSats', 'avgArea', 'minArea', 'maxArea', 'stdDevArea','avgPerimeter', 'minPerimeter', 'maxPerimeter', 'stdDevPerimeter',
             'avgEccentricity', 'minEccentricity', 'maxEccentricity', 'stdDevEccentricity','avgMinor', 'minMinor', 'maxMinor', 'stdDevMinor',
             'avgMajor', 'minMajor', 'maxMajor', 'stdDevMajor','avgDiamter', 'minDiameter', 'maxDiameter', 'stdDevDiamater', ]
 colNames = []
@@ -56,7 +56,8 @@ results = []
 for imageNum in range(len(iset_satellites_gt)):
     tempName = (str(iset_satellites_gt[imageNum].filepath).split('/')[-1]).split('.')[0]
     colNames.append(str(tempName))
-    temp = [float(sum(iset_satellites_gt[imageNum].rprops.area) / len(iset_satellites_gt[imageNum].rprops.area)),
+    temp = [float(len(iset_satellites_gt[imageNum].rprops.area)),
+            float(sum(iset_satellites_gt[imageNum].rprops.area) / len(iset_satellites_gt[imageNum].rprops.area)),
             float(min(iset_satellites_gt[imageNum].rprops.area)),
             float(max(iset_satellites_gt[imageNum].rprops.area)),
             float(np.std(iset_satellites_gt[imageNum].rprops.area)),
