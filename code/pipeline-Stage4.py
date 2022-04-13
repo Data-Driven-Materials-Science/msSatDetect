@@ -30,7 +30,8 @@ from ampis.structures import InstanceSet
 from ampis.visualize import display_iset
 import seaborn as sns
 
-satellites_gt_path_train = Path('..', 'data', 'training', 'satellite_training.json')
+#satellites_gt_path_train = Path('..', 'data', 'training', 'satellite_training.json')
+satellites_gt_path_train = Path('..', 'data', 'newData', 'sat_char_extract.json')
 satellites_gt_dd_train = data_utils.get_ddicts('via2', satellites_gt_path_train, dataset_class='train')
 iset_satellites_gt = [InstanceSet().read_from_ddict(x, inplace=False) for x in satellites_gt_dd_train]
 print('Num Satellite Images: ' + str(len(iset_satellites_gt)))
