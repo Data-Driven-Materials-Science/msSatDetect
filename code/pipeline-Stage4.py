@@ -8,6 +8,7 @@ from pathlib import Path
 from IPython.display import display
 import pickle
 import skimage.io
+import pandas as pd
 import sys
 
 ## detectron2
@@ -47,10 +48,47 @@ for i in range(len(iset_satellites_gt)):
     print(name)
     print(iset_satellites_gt[i].rprops.shape)'''
 
+rowNames = ['avgArea', 'minArea', 'maxArea', 'stdDevArea','avgPerimeter', 'minPerimeter', 'maxPerimeter', 'stdDevPerimeter',
+            'avgEccentricity', 'minEccentricity', 'maxEccentricity', 'stdDevEccentricity','avgMinor', 'minMinor', 'maxMinor', 'stdDevMinor',
+            'avgMajor', 'minMajor', 'maxMajor', 'stdDevMajor','avgDiamter', 'minDiameter', 'maxDiameter', 'stdDevDiamater', ]
+colNames = []
+results = []
+for imageNum in range(len(iset_satellites_gt)):
+    tempName = (str(iset_satellites_gt[imageNum].filepath).split('/')[-1]).split('.')[0]
+    colNames.append(str(tempName))
+    temp = [float(sum(iset_satellites_gt[imageNum].rprops.area) / len(iset_satellites_gt[imageNum].rprops.area)),
+            float(min(iset_satellites_gt[imageNum].rprops.area)),
+            float(max(iset_satellites_gt[imageNum].rprops.area)),
+            float(np.std(iset_satellites_gt[imageNum].rprops.area)),
+            float(sum(iset_satellites_gt[imageNum].rprops.perimeter) / len(iset_satellites_gt[imageNum].rprops.perimeter)),
+            float(min(iset_satellites_gt[imageNum].rprops.perimeter)),
+            float(max(iset_satellites_gt[imageNum].rprops.perimeter)),
+            float(np.std(iset_satellites_gt[imageNum].rprops.perimeter)),
+            float(sum(iset_satellites_gt[imageNum].rprops.eccentricity) / len(iset_satellites_gt[imageNum].rprops.eccentricity)),
+            float(min(iset_satellites_gt[imageNum].rprops.eccentricity)),
+            float(max(iset_satellites_gt[imageNum].rprops.eccentricity)),
+            float(np.std(iset_satellites_gt[imageNum].rprops.eccentricity)),
+            float(sum(iset_satellites_gt[imageNum].rprops.minor_axis_length) / len(iset_satellites_gt[imageNum].rprops.minor_axis_length)),
+            float(min(iset_satellites_gt[imageNum].rprops.minor_axis_length)),
+            float(max(iset_satellites_gt[imageNum].rprops.minor_axis_length)),
+            float(np.std(iset_satellites_gt[imageNum].rprops.minor_axis_length)),
+            float(sum(iset_satellites_gt[imageNum].rprops.major_axis_length) / len(iset_satellites_gt[imageNum].rprops.major_axis_length)),
+            float(min(iset_satellites_gt[imageNum].rprops.major_axis_length)),
+            float(max(iset_satellites_gt[imageNum].rprops.major_axis_length)),
+            float(np.std(iset_satellites_gt[imageNum].rprops.major_axis_length)),
+            float(sum(iset_satellites_gt[imageNum].rprops.equivalent_diameter) / len(iset_satellites_gt[imageNum].rprops.equivalent_diameter)),
+            float(min(iset_satellites_gt[imageNum].rprops.equivalent_diameter)),
+            float(max(iset_satellites_gt[imageNum].rprops.equivalent_diameter)),
+            float(np.std(iset_satellites_gt[imageNum].rprops.equivalent_diameter))]
+    results.append(temp)
+df = dfObj = pd.DataFrame(results, columns = rowNames, index=colNames)
+df = df.T
+df.to_csv('../data/newData/output/metrics.csv')
+print(df)
 
 
 #Prints out Average, Min, Max, and Std Deviation of Area, Equivalent Diemeter, Major Axis, Minor Axis, Perimeter and Eccentricity
-print('Image One Metrics')
+'''print('Image One Metrics')
 imageNum = 2
 print('-' * 30)
 print("AREA: ")
@@ -71,17 +109,17 @@ print('Min: ' + str(min(iset_satellites_gt[imageNum].rprops.eccentricity)))
 print('Max: ' + str(max(iset_satellites_gt[imageNum].rprops.eccentricity)))
 print('Std Deviation: ' + str(np.std(iset_satellites_gt[imageNum].rprops.eccentricity)))
 print('-' * 30)
-print("MAJOR AXIS LENGTH: ")
-print('Average: ' + str(sum(iset_satellites_gt[imageNum].rprops.major_axis_length) / len(iset_satellites_gt[imageNum].rprops.major_axis_length)))
-print('Min: ' + str(min(iset_satellites_gt[imageNum].rprops.major_axis_length)))
-print('Max: ' + str(max(iset_satellites_gt[imageNum].rprops.major_axis_length)))
-print('Std Deviation: ' + str(np.std(iset_satellites_gt[imageNum].rprops.major_axis_length)))
-print('-' * 30)
 print("MINOR AXIS LENGTH: ")
 print('Average: ' + str(sum(iset_satellites_gt[imageNum].rprops.minor_axis_length) / len(iset_satellites_gt[imageNum].rprops.minor_axis_length)))
 print('Min: ' + str(min(iset_satellites_gt[imageNum].rprops.minor_axis_length)))
 print('Max: ' + str(max(iset_satellites_gt[imageNum].rprops.minor_axis_length)))
 print('Std Deviation: ' + str(np.std(iset_satellites_gt[imageNum].rprops.minor_axis_length)))
+print('-' * 30)
+print("MAJOR AXIS LENGTH: ")
+print('Average: ' + str(sum(iset_satellites_gt[imageNum].rprops.major_axis_length) / len(iset_satellites_gt[imageNum].rprops.major_axis_length)))
+print('Min: ' + str(min(iset_satellites_gt[imageNum].rprops.major_axis_length)))
+print('Max: ' + str(max(iset_satellites_gt[imageNum].rprops.major_axis_length)))
+print('Std Deviation: ' + str(np.std(iset_satellites_gt[imageNum].rprops.major_axis_length)))
 print('-' * 30)
 print("EQUIVALENT DIAMETER: ")
 print('Average: ' + str(sum(iset_satellites_gt[imageNum].rprops.equivalent_diameter) / len(iset_satellites_gt[imageNum].rprops.equivalent_diameter)))
@@ -89,3 +127,4 @@ print('Min: ' + str(min(iset_satellites_gt[imageNum].rprops.equivalent_diameter)
 print('Max: ' + str(max(iset_satellites_gt[imageNum].rprops.equivalent_diameter)))
 print('Std Deviation: ' + str(np.std(iset_satellites_gt[imageNum].rprops.equivalent_diameter)))
 print('-' * 30)
+'''
