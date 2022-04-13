@@ -7,3 +7,4 @@ Stage 3 is not coding related.
 [-] Save touch ups by Project -> Save -> (Save to file under name "sat_char_extract.json")
 [-] Upload back to super computer to msSatDetect/data/newData/
 [-] Run pipeline-Stage4.py
+[-] Results will be found under msSatDetect/data/newData/output/metrics.csv
