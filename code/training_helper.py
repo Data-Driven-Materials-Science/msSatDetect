@@ -171,3 +171,28 @@ def trainModel(objectName, json_path_train, json_path_val, maxIterations=5000, c
     trainer.resume_or_load(resume=False)  # start training from iteration 0
     trainer.train()  # train the model!
     return outputDir
+
+
+def visualizeResults():
+    '''
+    filepath of model
+    filepath of all images
+    filepath to save images to
+    '''
+    ...
+
+def saveResultsToPickle():
+    '''
+    filepath of model
+    filepath of all images
+    filepath to save .pickle results to
+    '''
+
+def calculateAccuracy():
+    '''
+    filepath of .pickle saved results
+    filepath of ground truth labels
+    method of calculating accuracy (AMPIS/SALAS)
+    filepath to save output too
+    '''
+    ...
